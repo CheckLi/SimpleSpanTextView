@@ -10,7 +10,6 @@ import android.text.style.AbsoluteSizeSpan
 import android.text.style.ForegroundColorSpan
 import android.text.style.StyleSpan
 import android.util.AttributeSet
-import android.util.Log
 import android.widget.TextView
 import com.example.spantextview.R
 
@@ -25,7 +24,7 @@ class SpanTextView : TextView {
     private var spanSize: MutableList<Float>? = null
     private var isBold: MutableList<Boolean>? = null
     private var separator = "%"//字符串分隔符
-
+    private var baseText: String? = null
     constructor(context: Context) : super(context) {
         initAttr(null)
     }
@@ -105,12 +104,12 @@ class SpanTextView : TextView {
 
     private fun getSpannableString(text: CharSequence): SpannableString {
         try {
+            baseText=text.toString()
             var content = text?.split(separator) ?: listOf("")
             val s1 = text.replace(Regex(separator), "")
             val span = SpannableString(s1)
             if (content.size > 1) {
                 for ((count, s) in (1 until content.size step 2).withIndex()) {
-                    Log.e("SpannableStringKotlin", "getSpannableString: $s $count")
                     val start = getStringIndex(content, s)
                     val end = start + content[s].length
                     val sizeindex = if (count > spanSize!!.size - 1) spanSize!!.size - 1 else count
@@ -133,7 +132,7 @@ class SpanTextView : TextView {
     /**
      * 获取span格式字符串
      */
-    fun setSpanString(span: SpannableString, size: Int, colorid: Int, start: Int, end: Int, spanStyle: Int, bold: Boolean) {
+    private fun setSpanString(span: SpannableString, size: Int, colorid: Int, start: Int, end: Int, spanStyle: Int, bold: Boolean) {
         span.setSpan(AbsoluteSizeSpan(size, true), start, end, spanStyle)
         span.setSpan(ForegroundColorSpan(colorid), start, end, spanStyle)
         if (bold) {
@@ -145,7 +144,7 @@ class SpanTextView : TextView {
      * 设置span格式文字
      */
     fun setSpanText(text: String) {
-        this@SpanTextView.text = getSpannableString(text)
+       setText(getSpannableString(text))
     }
 
     /**
@@ -153,6 +152,7 @@ class SpanTextView : TextView {
      */
     fun setSpanColor(vararg colors: String) {
         initColors(colors.asList())
+        setSpanText(baseText!!)
     }
 
     /**
@@ -160,6 +160,7 @@ class SpanTextView : TextView {
      */
     fun setSpanSize(vararg sizes: Float) {
         spanSize = sizes.toMutableList()
+        setSpanText(baseText!!)
     }
 
     /**
@@ -167,13 +168,17 @@ class SpanTextView : TextView {
      */
     fun setSpanBold(vararg bolds: Boolean) {
         isBold = bolds.toMutableList()
+        setSpanText(baseText!!)
     }
 
     /**
      * 设置分隔符
      */
     fun setSeparator(separator: String) {
+        baseText=baseText?.replace(Regex(this.separator),separator)
         this.separator = separator
+        setSpanText(baseText!!)
     }
 
+    fun getSeparator()=separator
 }

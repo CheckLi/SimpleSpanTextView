@@ -11,7 +11,6 @@ import android.text.style.AbsoluteSizeSpan;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.StyleSpan;
 import android.util.AttributeSet;
-import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -28,6 +27,7 @@ public class SpanText extends android.support.v7.widget.AppCompatTextView{
     private List<Float> spanSize;
     private List<Boolean> isBold;
     private String separator = "%";//字符串分隔符
+    private String baseText;
     public SpanText(Context context) {
         super(context);
         initAttr(null);
@@ -127,6 +127,7 @@ public class SpanText extends android.support.v7.widget.AppCompatTextView{
     private SpannableString getSpannableString( CharSequence text1) {
         try {
             String text=text1.toString();
+            baseText=text;
             String[] content = text.split(separator);
             String s1 = text.replaceAll(separator, "");
             SpannableString span =new SpannableString(s1);
@@ -134,7 +135,6 @@ public class SpanText extends android.support.v7.widget.AppCompatTextView{
             if (lenght > 1) {
                 int count=0;
                 for (int i = 1; i <lenght; i+=2) {
-                    Log.e("SpannableStringJava", "getSpannableString: " +i+" "+count);
                     int start = getStringIndex(content, i);
                     int end = start + content[i].length();
                     int sizeindex=count>spanSize.size()-1? spanSize.size()-1:count;
@@ -183,6 +183,7 @@ public class SpanText extends android.support.v7.widget.AppCompatTextView{
      */
     public void setSpanColor(String...colors) {
         initColors(colors);
+        setSpanText(baseText);
     }
 
     /**
@@ -190,6 +191,7 @@ public class SpanText extends android.support.v7.widget.AppCompatTextView{
      */
     public void setSpanSize(Float...sizes) {
         spanSize =Arrays.asList(sizes);
+        setSpanText(baseText);
     }
 
     /**
@@ -197,12 +199,19 @@ public class SpanText extends android.support.v7.widget.AppCompatTextView{
      */
     public void setSpanBold(Boolean...bolds ) {
         isBold =Arrays.asList(bolds);
+        setSpanText(baseText);
     }
 
     /**
      * 设置分隔符
      */
     public void setSeparator(String separator ) {
+        baseText=baseText.replaceAll(this.separator,separator);
         this.separator = separator;
+        setSpanText(baseText);
+    }
+
+    public String getSeparator() {
+        return separator;
     }
 }
