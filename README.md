@@ -5,7 +5,7 @@
 ![image](https://github.com/q1987320aaa/SimpleSpanTextView/blob/master/image/GIF.gif)
 # 使用方式
 # xml实现
-'"Java
+```Java
 <!--kotlin代码实现-->
     <com.huizhuang.zxsq.widget.textview.SpanTextView
 
@@ -37,8 +37,10 @@
         app:spanSize="14,18"
         app:spanBold="0,1,1,0"
         app:spanSeparator="%"/>
-'"
+```
 ## 部分核心代码
+
+```Java
  private fun getSpannableString(text: CharSequence): SpannableString {
         try {
             baseText=text.toString()
@@ -61,6 +63,7 @@
             return SpannableString(text)
         }
     }
-'"Java
-
-'"
+```
+# 有问题请联系
+QQ:1354982095
+邮箱:1354982095@qq.com
