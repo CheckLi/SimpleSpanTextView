@@ -10,6 +10,7 @@ import android.text.style.AbsoluteSizeSpan
 import android.text.style.ForegroundColorSpan
 import android.text.style.StyleSpan
 import android.util.AttributeSet
+import android.util.Log
 import android.widget.TextView
 import com.example.spantextview.R
 
@@ -109,6 +110,7 @@ class SpanTextView : TextView {
             val span = SpannableString(s1)
             if (content.size > 1) {
                 for ((count, s) in (1 until content.size step 2).withIndex()) {
+                    Log.e("SpannableStringKotlin", "getSpannableString: $s $count")
                     val start = getStringIndex(content, s)
                     val end = start + content[s].length
                     val sizeindex = if (count > spanSize!!.size - 1) spanSize!!.size - 1 else count

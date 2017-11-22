@@ -1,1 +1,1 @@
-include ':app', ':spantextview'
+include ':app', ':spantextview', ':spantextviewjava'
