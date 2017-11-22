@@ -5,6 +5,7 @@
 ![image](https://github.com/q1987320aaa/SimpleSpanTextView/blob/master/image/GIF.gif)
 # 使用方式
 # xml实现
+#### 下面两种只是实现方式不一样，逻辑都一样
 ```Java
 <!--kotlin代码实现-->
     <com.huizhuang.zxsq.widget.textview.SpanTextView
