@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--span控件，可以直接在text中设置span属性-->
+    <declare-styleable name="SpanTextView">
+        <!--参数全部用字符串，方面分割数据，为多组span设置属性，逗号分隔-->
+        <attr name="spanColor" format="string"/>
+        <!--字体大小，逗号分隔-->
+        <attr name="spanSize" format="string"/>
+        <!--是否加粗，逗号分隔,0不加粗，1是加粗，默认不加粗-->
+        <attr name="spanBold" format="string"/>
+        <!--分隔符-->
+        <attr name="spanSeparator" format="string"/>
+    </declare-styleable>
+</resources>

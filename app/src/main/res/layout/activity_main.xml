@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.administrator.simplespantextview.MainActivity">
+
+    <com.huizhuang.zxsq.widget.textview.SpanTextView
+        android:id="@+id/tv_spantext"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="《%武动乾坤%》是连载在起点
+        中文网的一部东方%玄幻小说%，作者是
+        起点白金作家%天蚕土豆%。"
+        android:textSize="14dp"
+        app:spanColor="#22c2cc,#ffc2cc,#ff6c38"
+        app:spanBold="0,1"
+        app:spanSize="18,14"
+        app:spanSeparator="%"
+        />
+
+</android.support.constraint.ConstraintLayout>
