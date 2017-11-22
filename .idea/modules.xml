@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/SimpleSpanTextView.iml" filepath="$PROJECT_DIR$/SimpleSpanTextView.iml" />
+      <module fileurl="file://$PROJECT_DIR$/SimpleTextView.iml" filepath="$PROJECT_DIR$/SimpleTextView.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/spantextview/spantextview.iml" filepath="$PROJECT_DIR$/spantextview/spantextview.iml" />
     </modules>
