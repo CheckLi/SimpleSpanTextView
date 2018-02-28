@@ -11,7 +11,7 @@ import android.text.style.ForegroundColorSpan
 import android.text.style.StyleSpan
 import android.util.AttributeSet
 import android.widget.TextView
-import com.example.spantextview.R
+import com.huizhuang.hz.R
 
 /**
  * @className:SpanTextView
@@ -25,6 +25,7 @@ class SpanTextView : TextView {
     private var isBold: MutableList<Boolean>? = null
     private var separator = "%"//字符串分隔符
     private var baseText: String? = null
+
     constructor(context: Context) : super(context) {
         initAttr(null)
     }
@@ -76,8 +77,40 @@ class SpanTextView : TextView {
             initBold(bolds)
             separator = if (s.isNullOrEmpty()) "%" else s
             a.recycle()
+        } else {
+            initEmpty()
         }
         init()
+    }
+
+   private fun initEmpty(){
+       val colors = arrayListOf(toHexEncoding(currentTextColor))
+       val sizes = arrayListOf((textSize / resources.displayMetrics.density).toString())
+       val bolds = arrayListOf("0")
+       initColors(colors)
+       initSize(sizes)
+       initBold(bolds)
+    }
+
+    override fun setTextSize(size: Float) {
+        super.setTextSize(size)
+        spanSize?.clear()
+        val sizes = arrayListOf((textSize / resources.displayMetrics.density).toString())
+        initSize(sizes)
+    }
+
+    override fun setTextSize(unit: Int, size: Float) {
+        super.setTextSize(unit, size)
+        spanSize?.clear()
+        val sizes = arrayListOf((textSize / resources.displayMetrics.density).toString())
+        initSize(sizes)
+    }
+
+    override fun setTextColor(color: Int) {
+        super.setTextColor(color)
+        spanColor?.clear()
+        val colors = arrayListOf(toHexEncoding(currentTextColor))
+        initColors(colors)
     }
 
     private fun initBold(bolds: List<String>) {
@@ -104,17 +137,19 @@ class SpanTextView : TextView {
 
     private fun getSpannableString(text: CharSequence): SpannableString {
         try {
-            baseText=text.toString()
-            var content = text?.split(separator) ?: listOf("")
+            baseText = text.toString()
+            var content = text?.split(Regex(separator),0) ?: listOf("")
+           /* content=content.filter { !it.isNullOrBlank() }
+            var content1=content.filter { it.isNullOrBlank() }*/
             val s1 = text.replace(Regex(separator), "")
             val span = SpannableString(s1)
             if (content.size > 1) {
                 for ((count, s) in (1 until content.size step 2).withIndex()) {
                     val start = getStringIndex(content, s)
                     val end = start + content[s].length
-                    val sizeindex = if (count > spanSize!!.size - 1) spanSize!!.size - 1 else count
-                    val colorindex = if (count > spanColor!!.size - 1) spanColor!!.size - 1 else count
-                    val boldindex = if (count > isBold!!.size - 1) isBold!!.size - 1 else count
+                    val sizeindex = if (count > spanSize!!.size - 1 && spanSize!!.size > 0) spanSize!!.size - 1 else count
+                    val colorindex = if (count > spanColor!!.size - 1 && spanColor!!.size > 0) spanColor!!.size - 1 else count
+                    val boldindex = if (count > isBold!!.size - 1 && isBold!!.size > 0) isBold!!.size - 1 else count
                     setSpanString(span, spanSize!![sizeindex].toInt(), spanColor!![colorindex]
                             , start, end, SpannableString.SPAN_EXCLUSIVE_EXCLUSIVE, isBold!![boldindex])
                 }
@@ -144,13 +179,18 @@ class SpanTextView : TextView {
      * 设置span格式文字
      */
     fun setSpanText(text: String) {
-       setText(getSpannableString(text))
+        setText(getSpannableString(text))
+    }
+
+    fun getSpanText(): String? {
+        return text.toString()
     }
 
     /**
      * 设置span颜色
      */
     fun setSpanColor(vararg colors: String) {
+        spanColor?.clear()
         initColors(colors.asList())
         setSpanText(baseText!!)
     }
@@ -159,6 +199,7 @@ class SpanTextView : TextView {
      * 设置span文字大小
      */
     fun setSpanSize(vararg sizes: Float) {
+        spanSize?.clear()
         spanSize = sizes.toMutableList()
         setSpanText(baseText!!)
     }
@@ -167,6 +208,7 @@ class SpanTextView : TextView {
      * 设置span加粗
      */
     fun setSpanBold(vararg bolds: Boolean) {
+        isBold?.clear()
         isBold = bolds.toMutableList()
         setSpanText(baseText!!)
     }
@@ -175,10 +217,10 @@ class SpanTextView : TextView {
      * 设置分隔符
      */
     fun setSeparator(separator: String) {
-        baseText=baseText?.replace(Regex(this.separator),separator)
+        baseText = baseText?.replace(Regex(this.separator), separator)
         this.separator = separator
         setSpanText(baseText!!)
     }
 
-    fun getSeparator()=separator
+    fun getSeparator() = separator
 }
