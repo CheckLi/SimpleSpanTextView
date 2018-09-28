@@ -10,5 +10,7 @@
         <attr name="spanBold" format="string"/>
         <!--分隔符-->
         <attr name="spanSeparator" format="string"/>
+         <!--被替换符号-->
+        <attr name="spanReplaceString" format="string" />
     </declare-styleable>
 </resources>
